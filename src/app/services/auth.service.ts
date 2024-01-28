@@ -35,5 +35,7 @@ isUserLoggedIn:Boolean;
     return this.isUserLoggedIn;
   }
 
+  //getAPIToken():String{}
+
 
 }

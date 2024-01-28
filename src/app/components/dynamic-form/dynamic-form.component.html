@@ -1,0 +1,13 @@
+<p>dynamic-form works!</p>
+<div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+
+        <div *ngFor="let part of parts" class="form-row">
+            <app-dynamic-invoice-form [part]="part" [form]="form"></app-dynamic-invoice-form>
+        </div>
+        <div class="form-row">
+            <button type="submit" [disabled]="!form.valid">Save</button>
+        </div>
+
+    </form>
+</div>
