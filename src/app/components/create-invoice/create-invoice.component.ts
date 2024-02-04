@@ -15,9 +15,18 @@ import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 })
 export class CreateInvoiceComponent {
   //parts$:Observable<Formable<string|number|boolean>[]>;
-  parts:Formable<string|number|boolean>[]|null;
+  parts!:Formable<string|number|boolean>[];
   constructor(private ims:InvoiceModelServiceService){
-    this.parts = ims.getInvoiceByType("faktura-krajowa");
+    ims.getInvoiceByType("faktura-krajowa").subscribe(
+      (value: Formable<string|number|boolean>[]|null)=>{
+        if (value){
+          this.parts = value;}
+        else{console.log("loaded null invoice");}
+      },
+      (error)=>{
+        console.log("error loading invoice model");
+      }
+    );
   }
 
 

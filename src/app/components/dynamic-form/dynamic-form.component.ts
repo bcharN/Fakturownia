@@ -13,12 +13,16 @@ import { InvoiceControlServiceService } from '../../services/invoice-control-ser
   styleUrl: './dynamic-form.component.scss'
 })
 export class DynamicFormComponent implements OnInit{
-  @Input() parts: Formable<string|number|boolean>[]|null=[];
+  @Input() parts: Formable<string|number|boolean>[]=[];
   form!:FormGroup;
   payLoad='';
   constructor(private ics: InvoiceControlServiceService){}
   ngOnInit(){
     this.form = this.ics.toFormGroup(this.parts as Formable<string|number|boolean>[]);
+    console.log(this.form);
+    for (const val in this.form.controls){
+      console.log();
+    }
   }
 
   onSubmit(){

@@ -2,8 +2,8 @@ export interface Formable<Type> {
     
     value?:Type|null, //typ w JSON
     key:string, //nazwa w JSON
-    required?:boolean, //wymagane
-    
+    validationRequired?:boolean, //wymagane
+    required:boolean,
     default?:Type|null,  //wartosc domyslna
     label?:string,   //metka
     
@@ -13,6 +13,6 @@ export interface Formable<Type> {
     description?:string, //dodatkowy opis
     options?: {key:string, value:string}[]|null, //dodatkowe opcje przy dropdown boxie
 
-    isValid?(value:Type):boolean, //funkcja ktora ma sprawdzic poprawnosc danej kontrolki
+    //isValid?(value:Type):boolean, //funkcja ktora ma sprawdzic poprawnosc danej kontrolki
     
 }

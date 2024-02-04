@@ -8,7 +8,8 @@ export class InvoiceControlServiceService {
   toFormGroup(invoiceParts : Formable<number|string|boolean>[]){
     const group: any = {};
     invoiceParts.forEach(part => {
-      group[part.key] = part.required 
+      console.log(part);
+      group[part.key] = part.validationRequired 
         ? new FormControl(part.value || '', Validators.required)
         : new FormControl(part.value || '');
     });

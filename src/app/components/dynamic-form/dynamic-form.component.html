@@ -1,8 +1,9 @@
 <p>dynamic-form works!</p>
 <div>
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-
+        <p>before ngFor</p>
         <div *ngFor="let part of parts" class="form-row">
+            <p>parent side of form question</p>
             <app-dynamic-invoice-form [part]="part" [form]="form"></app-dynamic-invoice-form>
         </div>
         <div class="form-row">
