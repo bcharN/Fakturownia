@@ -1,0 +1,7 @@
+{
+    "/api":{
+        "target":"172.21.224.1:3001/api",
+        "secure":false,
+        "logLevel":"debug"
+    }
+}

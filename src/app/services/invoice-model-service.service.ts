@@ -9,12 +9,11 @@ import { Observable, Subscriber, of } from 'rxjs';
 export class InvoiceModelServiceService {
   invoices:Sendable[]=[];
   constructor() { }
-  getInvoiceByType(invoiceType:string):Observable<Formable<string|number|boolean>[]|null>{
+  getInvoiceByType(invoiceType:string):Observable<Sendable|null>{
     switch (invoiceType){
       case "faktura-krajowa":{
           
-          const invoice = new FakturaKrajowa();
-          return of(invoice.getFields());
+          return of(new FakturaKrajowa());
           //this.invoices.push(new FakturaKrajowa());
           //return this.invoices[this.invoices.length].getFields();
           //return new Observable((observer)=>{observer.next(invoice.getFields())});
@@ -23,4 +22,7 @@ export class InvoiceModelServiceService {
       default: {return of(null);}
     }
   }
+
+
+
 }

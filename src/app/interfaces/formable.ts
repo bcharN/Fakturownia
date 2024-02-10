@@ -11,7 +11,7 @@ export interface Formable<Type> {
     htmlControlType?:string, //typ controlki html
     
     description?:string, //dodatkowy opis
-    options?: {key:string, value:string}[]|null, //dodatkowe opcje przy dropdown boxie
+    options?: {key:string|boolean|number, value:string}[]|null, //dodatkowe opcje przy dropdown boxie
 
     //isValid?(value:Type):boolean, //funkcja ktora ma sprawdzic poprawnosc danej kontrolki
     

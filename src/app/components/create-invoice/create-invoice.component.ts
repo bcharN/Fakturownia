@@ -4,6 +4,8 @@ import { InvoiceModelServiceService } from '../../services/invoice-model-service
 import { Observable } from 'rxjs';
 import { Formable } from '../../interfaces/formable';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
+import { Sendable } from '../../interfaces/sendable';
+import { InvoiceAPIService } from '../../services/invoice-api.service';
 
 @Component({
   selector: 'app-create-invoice',
@@ -11,22 +13,22 @@ import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
   imports: [DynamicFormComponent],
   templateUrl: './create-invoice.component.html',
   styleUrl: './create-invoice.component.scss',
-  providers:[InvoiceModelServiceService]
+  providers:[InvoiceModelServiceService, InvoiceAPIService]
 })
 export class CreateInvoiceComponent {
   //parts$:Observable<Formable<string|number|boolean>[]>;
-  parts!:Formable<string|number|boolean>[];
+  invoiceObject!:Sendable;
   constructor(private ims:InvoiceModelServiceService){
-    ims.getInvoiceByType("faktura-krajowa").subscribe(
-      (value: Formable<string|number|boolean>[]|null)=>{
+    ims.getInvoiceByType("faktura-krajowa").subscribe({
+      next: (value: Sendable|null) => {
         if (value){
-          this.parts = value;}
+          this.invoiceObject = value;}
         else{console.log("loaded null invoice");}
       },
-      (error)=>{
+      error: error=>{
         console.log("error loading invoice model");
       }
-    );
+  });
   }
 
 
