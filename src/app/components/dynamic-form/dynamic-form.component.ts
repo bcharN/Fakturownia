@@ -6,23 +6,37 @@ import { Formable } from '../../interfaces/formable';
 import { InvoiceControlServiceService } from '../../services/invoice-control-service.service';
 import { Sendable } from '../../interfaces/sendable';
 import { InvoiceAPIService } from '../../services/invoice-api.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-dynamic-form',
   standalone: true,
-  imports: [CommonModule, DynamicInvoiceFormComponent, ReactiveFormsModule],
+  imports: [RouterModule,CommonModule, DynamicInvoiceFormComponent, ReactiveFormsModule],
   templateUrl: './dynamic-form.component.html',
-  styleUrl: './dynamic-form.component.scss'
+  styleUrl: '../../../assets/styles/styles.scss'
 })
 export class DynamicFormComponent implements OnInit{
   @Input() invoiceObject!: Sendable;
   form!:FormGroup;
-  parts!:Formable<string|number|boolean>[];
+  entryForm!:FormGroup;
+  counterpartyForm!:FormGroup;
+
+  mainInvoiceParts!:Formable<string|number|boolean>[];
+  invoiceEntryParts!:Formable<string|number|boolean>[];
+  invoiceCounterpartyParts!:Formable<string|number|boolean>[];
   payLoad='';
-  constructor(private ics: InvoiceControlServiceService, private invoiceApiService: InvoiceAPIService){}
+  constructor(private ics: InvoiceControlServiceService, private invoiceApiService: InvoiceAPIService, private router:Router){}
   ngOnInit(){
-    this.parts = this.invoiceObject.getFields();
-    this.form = this.ics.toFormGroup(this.parts as Formable<string|number|boolean>[]);
+    this.mainInvoiceParts = this.invoiceObject.getFields();
+    this.form = this.ics.toFormGroup(this.mainInvoiceParts as Formable<string|number|boolean>[]);
+    
+    this.invoiceEntryParts = this.invoiceObject.getEntry();
+    this.entryForm = this.ics.toFormGroup(this.invoiceEntryParts as Formable<string|number|boolean>[]);
+    
+    this.invoiceCounterpartyParts = this.invoiceObject.getCounterparty();
+    this.counterpartyForm = this.ics.toFormGroup(this.invoiceCounterpartyParts as Formable<string|number|boolean>[]);
+    
+    
     console.log(this.form);
     for (const val in this.form.controls){
       console.log(); 
@@ -30,10 +44,16 @@ export class DynamicFormComponent implements OnInit{
   }
 
   onSubmit(){
-    this.invoiceObject.setValues(this.form.value);
+    this.invoiceObject.setFields(this.form.value);
+    this.invoiceObject.setEntry(this.entryForm.value);
+    this.invoiceObject.setCounterparty(this.counterpartyForm.value);
+    
     console.log("sending from component"+this.invoiceObject.getSendableObject());
     this.invoiceApiService.sendInvoice(this.invoiceObject).subscribe({
-      next: res => console.log("success: "+JSON.stringify(res)),
+      next: res => {
+        console.log("success: "+JSON.stringify(res));
+        this.router.navigate(["/home"]);
+      },
       error: error=>console.log("error: "+error)
     })
        

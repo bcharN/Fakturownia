@@ -7,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  styleUrl: '../../../assets/styles/styles.scss'
 })
 export class HomePageComponent implements OnInit{
   constructor(private authService:AuthService, private router:Router){
@@ -15,8 +15,8 @@ export class HomePageComponent implements OnInit{
   }
   ngOnInit(): void {
       if(!this.authService.getUserLoggedInStatus()){
-        alert("you need to login first!");
-        this.router.navigate(["/login"]);
+        console.log("you need to login first!");
+        //this.router.navigate(["/login"]);
       }
   }
 }

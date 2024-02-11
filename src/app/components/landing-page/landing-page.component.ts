@@ -7,7 +7,7 @@ import { Route, Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule,RouterModule],
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.scss'
+  styleUrl: '../../../assets/styles/styles.scss'
 })
 export class LandingPageComponent {
   constructor(private router: Router) {

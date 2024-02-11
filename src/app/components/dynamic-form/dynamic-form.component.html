@@ -1,11 +1,16 @@
-<p>dynamic-form works!</p>
 <div>
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <div *ngFor="let part of parts" class="form-row">
-            <app-dynamic-invoice-form [part]="part" [form]="form"></app-dynamic-invoice-form>
+        <div *ngFor="let partM of mainInvoiceParts" class="invoiceFormPart">
+            <app-dynamic-invoice-form [part]="partM" [form]="form"></app-dynamic-invoice-form>
+        </div>
+        <div *ngFor="let partE of invoiceEntryParts" class="invoiceFormPart">
+            <app-dynamic-invoice-form [part]="partE" [form]="entryForm"></app-dynamic-invoice-form>
+        </div>
+        <div *ngFor="let partC of invoiceCounterpartyParts" class="invoiceFormPart">
+            <app-dynamic-invoice-form [part]="partC" [form]="counterpartyForm"></app-dynamic-invoice-form>
         </div>
         <div class="form-row">
-            <button type="submit" [disabled]="!form.valid">Save</button>
+            <button type="submit" [disabled]="!(form.valid && entryForm.valid && counterpartyForm.valid)">Save</button>
         </div>
 
     </form>

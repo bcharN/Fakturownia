@@ -1,7 +1,7 @@
 import { Formable } from "../interfaces/formable";
 import { Sendable } from "../interfaces/sendable";
 
-export class FakturaKrajowa implements Sendable{
+export class FakturaKrajowa {
     invoiceType:string = "faktura-krajowa";
     url:string="fakturakraj.json";
     authKeyName: string="faktura";
@@ -47,18 +47,21 @@ export class FakturaKrajowa implements Sendable{
             options:[{key:"one",value:"hello"},{key:"two",value:"world"}],
         }
     ]
+    public entries:Formable<string|number|boolean>[]=[];
+    public counterparty:Formable<string|number|boolean>[]=[];
+
     getFields(): Formable<string | number | boolean>[] {
-        return this.fields;
+        return this.entries;
     }
-    setValues(values:any):void {
-        for (const field of this.fields){
+    setFields(values:any):void {
+        for (const field of this.entries){
             const convVal = Number(values[field.key]);
             field.value  = isNaN(convVal) ? values[field.key] : convVal;
         }
     }
     getSendableObject(): object {
         const result = {};
-        for (const field of this.fields){
+        for (const field of this.entries){
             //console.log({key:field.key,value:field.value})
             Object.defineProperty(result, field.key,{value:field.value,enumerable:true});
         }
@@ -66,7 +69,7 @@ export class FakturaKrajowa implements Sendable{
         return result;
     }
     clear():void{
-        for(const field of this.fields){
+        for(const field of this.entries){
             field.value=null;
         }
     }

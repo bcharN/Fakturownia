@@ -5,15 +5,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-isUserLoggedIn:Boolean;
+isUserLoggedIn:boolean;
+email!:string;
+password!:string;
   constructor() { 
     this.isUserLoggedIn=false;
   }
 
 
-  loginWithEmail(email:String, password:String): Promise<String>{
+  loginWithEmail(email:string, password:string): Promise<string>{
     return new Promise((resolve, reject)=>{
-      if ( email=="jan@example.com" && password== "1234"){
+      if ( email==this.email && password== this.password){
         this.isUserLoggedIn=true;
         resolve("Logged in");
       }
@@ -23,15 +25,22 @@ isUserLoggedIn:Boolean;
       }
     });
   }
+  registerWithEmail(email:string, password:string): Promise<string>{
+    return new Promise((resolve, reject)=>{
+      this.email=email;
+      this.password=password
+      resolve("registered correctly")
+    });
+  }
 
-  logout():Promise<String>{
+  logout():Promise<string>{
     return new Promise((resolve,reject)=>{
       this.isUserLoggedIn=false;
       resolve("succesfuly logged out :)");
     })
   }
 
-  getUserLoggedInStatus():Boolean{
+  getUserLoggedInStatus():boolean{
     return this.isUserLoggedIn;
   }
 

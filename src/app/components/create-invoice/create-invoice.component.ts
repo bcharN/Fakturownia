@@ -6,14 +6,15 @@ import { Formable } from '../../interfaces/formable';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { Sendable } from '../../interfaces/sendable';
 import { InvoiceAPIService } from '../../services/invoice-api.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-create-invoice',
   standalone: true,
-  imports: [DynamicFormComponent],
+  imports: [DynamicFormComponent,RouterModule],
   templateUrl: './create-invoice.component.html',
-  styleUrl: './create-invoice.component.scss',
-  providers:[InvoiceModelServiceService, InvoiceAPIService]
+  styleUrl: '../../../assets/styles/styles.scss',
+  providers:[InvoiceModelServiceService]
 })
 export class CreateInvoiceComponent {
   //parts$:Observable<Formable<string|number|boolean>[]>;

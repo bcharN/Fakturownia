@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
   standalone: true,
   imports: [CommonModule, RouterOutlet, FormsModule,HttpClientModule,ReactiveFormsModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: '../assets/styles/styles.scss'
 })
 export class AppComponent {
   title = 'Fakturownia';

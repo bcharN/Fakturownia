@@ -1,7 +1,4 @@
-<p>dynamic-invoice-form works!</p>
-
-<div [formGroup]="form">
-    <p>single question </p>
+<div [formGroup]="form" class="InvoiceQuestion">
     <label [attr.for]="part.key">{{part.label}}</label>
     <div [ngSwitch]="part.htmlControlType">
         <input *ngSwitchCase="'textbox'" [formControlName]="part.key" [id]="part.key" [type]="part.htmlType">

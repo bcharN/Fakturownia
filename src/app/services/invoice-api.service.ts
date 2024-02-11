@@ -19,7 +19,8 @@ export class InvoiceAPIService {
   // crypto = require('crypto');
   //invoiceList:Invoice[]=[]; 
 
-
+  invoiceCache:Sendable[]=[];
+  addedInvoice:boolean=false;
   constructor(private httpClient: HttpClient, private ims:InvoiceModelServiceService) {
   }
   private getAuthKey(authKeyName: string) {
@@ -41,6 +42,8 @@ export class InvoiceAPIService {
   // }
 
   sendInvoice(invoice: Sendable): Observable<object> {
+    this.invoiceCache.push(invoice);
+    this.addedInvoice=true;
     const fullUrl = this.getFullUrl(invoice);
     const body = invoice.getSendableObject();//JSON.stringify(invoice.getSendableObject());
     const headers = this.getFullHeaders(fullUrl, invoice, body);
@@ -72,7 +75,7 @@ export class InvoiceAPIService {
     const fullUrl = this.getFullUrl(invoice)
     const headers = this.getFullHeaders(fullUrl,invoice,{});
     this.httpClient.get<object>(fullUrl,{headers, responseType:'json'}).subscribe({
-      next:(data)=>{invoice.setValues(data)},
+      next:(data)=>{invoice.setFields(data)},
       error:(err)=>{console.log("error getting data from api",`${err}`); return obsErr}
     });
     return of(invoice);
@@ -83,7 +86,10 @@ export class InvoiceAPIService {
     // }
     // else {return obsErr;}
   }
-  getInvoiceListByType(invoiceType:string):Observable<Sendable[]>{
+  getInvoiceListByType(invoiceType:string, fromCache:boolean):Observable<Sendable[]>{
+    console.log("added invoice to cache in api service: "+`${this.addedInvoice}`)
+    if(fromCache){return of(this.invoiceCache)}
+    
     const obsErr = new Observable<Sendable>((subscriber)=>{return subscriber.error});
     let invoice!:Sendable;
     let rawRespData!:object;
@@ -109,7 +115,7 @@ export class InvoiceAPIService {
 
     for (const inv in rawRespData){
       invoice.clear();
-      invoice.setValues(inv);
+      invoice.setFields(inv);
       invoices.push(invoice);
     }
     return of(invoices);

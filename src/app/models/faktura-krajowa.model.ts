@@ -314,7 +314,7 @@ export class FakturaKrajowa implements Sendable {
             isValid: () => { return false; }
         } as Formable<string>,]
 
-    public entries: Formable<string | number | boolean>[] = [
+    public invoiceEntry: Formable<string | number | boolean>[] = [
         {
             value: null,
             key: "StawkaVat",
@@ -659,26 +659,82 @@ export class FakturaKrajowa implements Sendable {
             isValid: () => { return false; }
         } as Formable<boolean>,
     ]
+
+
+   
     getFields(): Formable<string | number | boolean>[] {
         return this.fields;
     }
-    setValues(values: any): void {
+    
+    getEntry():Formable<string | number | boolean>[]{
+        return this.invoiceEntry;
+    }
+    getCounterparty(): Formable<string | number | boolean>[] {
+        return this.counterparty;
+    }
+    setFields(values: any): void {
         for (const field of this.fields) {
-            const convVal = Number(values[field.key]);
-            field.value = isNaN(convVal) ? values[field.key] : convVal;
+            const inputVal = values[field.key]
+            const convToNumVal = Number(inputVal);
+            //const boolVal = Boolean(values[field.key])
+            field.value = isNaN(convToNumVal) ? values[field.key] : convToNumVal;
+
+            // 
+            // = ((inputVal == "true" || inputVal == "false") && field.valType == boolean) ? boolVal : normalVal
+        }
+
+    }
+    setEntry(values: any): void {
+        for (const entry of this.invoiceEntry) {
+            const inputVal = values[entry.key]
+            const convToNumVal = Number(inputVal);
+            //const boolVal = Boolean(values[field.key])
+            entry.value = isNaN(convToNumVal) ? values[entry.key] : convToNumVal;
+        }
+        
+    }
+
+    clearEntry() {
+        for (const entry of this.invoiceEntry){
+            entry.value=null;
         }
     }
+    setCounterparty(values: any): void {
+        for (const field of this.counterparty) {
+            const inputVal = values[field.key]
+            const convToNumVal = Number(inputVal);
+            //const boolVal = Boolean(values[field.key])
+            field.value = isNaN(convToNumVal) ? values[field.key] : convToNumVal;
+        }
+    }
+
+
     getSendableObject(): object {
-        const result = {};
+        const result = {"pozycje":{},"kontrahent":{}};
         for (const field of this.fields) {
             //console.log({key:field.key,value:field.value})
             Object.defineProperty(result, field.key, { value: field.value, enumerable: true });
+        }
+        for (const field of this.invoiceEntry) {
+            //console.log({key:field.key,value:field.value})
+            Object.defineProperty(result.pozycje , field.key, { value: field.value, enumerable: true });
+        }
+        Object.defineProperty(result, "kontrahent",{value:{},enumerable:true});
+        for (const field of this.counterparty) {
+            //console.log({key:field.key,value:field.value})
+            Object.defineProperty(result.kontrahent, field.key, { value: field.value, enumerable: true });
         }
         //console.log(result);
         return result;
     }
     clear(): void {
         for (const field of this.fields) {
+            field.value = null;
+        }
+        for (const field of this.invoiceEntry) {
+            field.value = null;
+        }
+        for (const field of this.counterparty) {
             field.value = null;
         }
     }

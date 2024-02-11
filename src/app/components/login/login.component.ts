@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,RouterModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: '../../../assets/styles/styles.scss'
 })
 export class LoginComponent {
 
-  email: String;
-  password: String;
+  email: string;
+  password: string;
 
   constructor(private router: Router, private authService: AuthService) {
     this.email = "";
@@ -24,12 +24,12 @@ export class LoginComponent {
     console.log("login atempt email=" + this.email + " password=" + this.password);
     this.authService.loginWithEmail(this.email, this.password)
       .then((data) => {
-        alert(data);
+        console.log(data);
         this.router.navigate(["/home"]);
       }).catch((error) => {
         alert(error);
       })
   }
 
-
+ 
 }

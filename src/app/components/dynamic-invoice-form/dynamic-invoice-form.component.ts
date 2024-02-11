@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './dynamic-invoice-form.component.html',
-  styleUrl: './dynamic-invoice-form.component.scss'
+  styleUrl: '../../../assets/styles/styles.scss'
 })
 export class DynamicInvoiceFormComponent {
   @Input() part!:Formable<string|number|boolean>;

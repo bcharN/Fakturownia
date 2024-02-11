@@ -1,1 +1,5 @@
-<p>invoice-list works!</p>
+<button routerLink="/home" routerLinkActive="router-link-active">strona główna</button> 
+<div *ngFor="let invoice of invoiceList">    
+    <p>{{invoice.authKeyName}}</p>
+    <app-invoice-detail [invoice]="invoice"></app-invoice-detail>
+</div>
