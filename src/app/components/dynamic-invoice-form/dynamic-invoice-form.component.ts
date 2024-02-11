@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Formable } from '../../interfaces/formable';
-import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core'
+import { type FormGroup, ReactiveFormsModule } from '@angular/forms'
+import { type Formable } from '../../interfaces/formable'
+import { CommonModule } from '@angular/common'
 
 @Component({
   selector: 'app-dynamic-invoice-form',
@@ -11,12 +11,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: '../../../assets/styles/styles.scss'
 })
 export class DynamicInvoiceFormComponent {
-  @Input() part!:Formable<string|number|boolean>;
-  @Input() form!:FormGroup;
+  @Input() part!: Formable<string | number | boolean>
+  @Input() form!: FormGroup
 
-  get isValid(){
-    return this.form.controls[this.part.key].valid;
+  get isValid (): boolean {
+    return this.form.controls[this.part.key].valid
   }
-
-
 }
