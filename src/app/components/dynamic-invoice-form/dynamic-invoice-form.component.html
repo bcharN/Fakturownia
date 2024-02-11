@@ -1,6 +1,6 @@
-<div [formGroup]="form" class="InvoiceQuestion">
-    <label [attr.for]="part.key">{{part.label}}</label>
-    <div [ngSwitch]="part.htmlControlType">
+<div [formGroup]="form" class="InvoiceQuestion" class="mb-3">
+    <label [attr.for]="part.key" class="form-label">{{part.label}}</label>
+    <div [ngSwitch]="part.htmlControlType" class="form-control">
         <input *ngSwitchCase="'textbox'" [formControlName]="part.key" [id]="part.key" [type]="part.htmlType">
         <select [id]="part.key" *ngSwitchCase="'dropdown'" [formControlName]="part.key">
             <option *ngFor="let option of part.options" [value]="option.key">{{option.value}}</option>

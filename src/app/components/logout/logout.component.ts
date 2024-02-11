@@ -1,9 +1,10 @@
 import { Component } from '@angular/core'
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './logout.component.html',
   styleUrl: '../../../assets/styles/styles.scss'
 })

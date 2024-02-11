@@ -1,5 +1,25 @@
-<button routerLink="/home" routerLinkActive="router-link-active">strona główna</button> 
-<div *ngFor="let invoice of invoiceList">    
-    <p>{{invoice.authKeyName}}</p>
-    <app-invoice-detail [invoice]="invoice"></app-invoice-detail>
+<div class="container">
+    <button routerLink="/home" routerLinkActive="router-link-active" class="btn btn-primary btn-lg">strona
+        główna</button>
+    <div class="accordion" id="accordionExample">
+        <div *ngFor="let invoice of invoiceList">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {{invoice.authKeyName}}
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        <app-invoice-detail [invoice]="invoice"></app-invoice-detail>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </div>

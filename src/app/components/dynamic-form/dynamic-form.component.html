@@ -1,16 +1,27 @@
-<div>
+<div class="container">
     <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <div *ngFor="let partM of mainInvoiceParts" class="invoiceFormPart">
-            <app-dynamic-invoice-form [part]="partM" [form]="form"></app-dynamic-invoice-form>
-        </div>
-        <div *ngFor="let partE of invoiceEntryParts" class="invoiceFormPart">
-            <app-dynamic-invoice-form [part]="partE" [form]="entryForm"></app-dynamic-invoice-form>
-        </div>
-        <div *ngFor="let partC of invoiceCounterpartyParts" class="invoiceFormPart">
-            <app-dynamic-invoice-form [part]="partC" [form]="counterpartyForm"></app-dynamic-invoice-form>
-        </div>
+        <h1>Wypełnij fakturę:</h1>
+        <span class="border">
+
+            <div *ngFor="let partM of mainInvoiceParts" class="container">
+                <app-dynamic-invoice-form [part]="partM" [form]="form"></app-dynamic-invoice-form>
+            </div>
+        </span>
+        <span class="border">
+            <h3>Pozycje</h3>
+            <div *ngFor="let partE of invoiceEntryParts" class="container">
+                <app-dynamic-invoice-form [part]="partE" [form]="entryForm"></app-dynamic-invoice-form>
+            </div>
+        </span>
+        <span class="border">
+            <h3>Kontrahent</h3>
+            <div *ngFor="let partC of invoiceCounterpartyParts" class="container">
+                <app-dynamic-invoice-form [part]="partC" [form]="counterpartyForm"></app-dynamic-invoice-form>
+            </div>
+        </span>
         <div class="form-row">
-            <button type="submit" [disabled]="!(form.valid && entryForm.valid && counterpartyForm.valid)">Save</button>
+            <button type="submit" [disabled]="!(form.valid && entryForm.valid && counterpartyForm.valid)"
+                class="btn btn-primary btn-lg butto">Zapisz</button>
         </div>
 
     </form>
